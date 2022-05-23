@@ -1,12 +1,7 @@
 <x-guest-layout>
     <x-jet-authentication-card>
-        <x-slot name="logo">
-            <x-jet-authentication-card-logo />
-        </x-slot>
-
-        <div class="card-body">
-
-            <x-jet-validation-errors class="mb-3 rounded-0" />
+        <div class="sign-in-from">
+            <h1 class="mb-0">Iniciar Sesión</h1>
 
             @if (session('status'))
                 <div class="alert alert-success mb-3 rounded-0" role="alert">
@@ -14,45 +9,34 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('login') }}">
+            <form method="POST" action="{{ route('login') }}" class="mt-4">
                 @csrf
-                <div class="mb-3">
+                <div class="form-group">
                     <x-jet-label value="{{ __('Email') }}" />
 
-                    <x-jet-input class="{{ $errors->has('email') ? 'is-invalid' : '' }}" type="email"
-                                 name="email" :value="old('email')" required />
+                    <x-jet-input class="{{ $errors->has('email') ? 'is-invalid' : '' }} form-control mb-0" type="email" name="email" :value="old('email')" required />
                     <x-jet-input-error for="email"></x-jet-input-error>
                 </div>
 
-                <div class="mb-3">
+                <div class="form-group">
                     <x-jet-label value="{{ __('Password') }}" />
 
-                    <x-jet-input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" type="password"
-                                 name="password" required autocomplete="current-password" />
+                    @if (Route::has('password.request'))
+                        <a href="{{ route('password.request') }}" class="float-right">{{ __('Forgot your password?') }}</a>
+                    @endif
+                    <x-jet-input class="form-control mb-0{{ $errors->has('password') ? ' is-invalid' : '' }}" type="password"
+                        name="password" required autocomplete="current-password" />
                     <x-jet-input-error for="password"></x-jet-input-error>
                 </div>
 
-                <div class="mb-3">
-                    <div class="custom-control custom-checkbox">
-                        <x-jet-checkbox id="remember_me" name="remember" />
+                <div class="d-inline-block w-100">
+                    <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
+                        <x-jet-checkbox id="remember_me" name="remember" class="custom-control-input"/>
                         <label class="custom-control-label" for="remember_me">
                             {{ __('Remember Me') }}
                         </label>
                     </div>
-                </div>
-
-                <div class="mb-0">
-                    <div class="d-flex justify-content-end align-items-baseline">
-                        @if (Route::has('password.request'))
-                            <a class="text-muted me-3" href="{{ route('password.request') }}">
-                                {{ __('Forgot your password?') }}
-                            </a>
-                        @endif
-
-                        <x-jet-button>
-                            {{ __('Log in') }}
-                        </x-jet-button>
-                    </div>
+                    <button type="submit" class="btn btn-primary float-right">Ingresar</button>
                 </div>
             </form>
         </div>

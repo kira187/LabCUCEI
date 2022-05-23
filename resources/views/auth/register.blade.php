@@ -1,69 +1,51 @@
 <x-guest-layout>
     <x-jet-authentication-card>
-        <x-slot name="logo">
-            <x-jet-authentication-card-logo />
-        </x-slot>
 
-        <x-jet-validation-errors class="mb-3" />
-
-        <div class="card-body">
-            <form method="POST" action="{{ route('register') }}">
+        <div class="sign-in-from">
+            <h1 class="mb-0">Registro</h1>
+            <form method="POST" action="{{ route('register') }}" class="mt-4">
                 @csrf
-
-                <div class="mb-3">
+                <div class="form-group">
                     <x-jet-label value="{{ __('Name') }}" />
 
-                    <x-jet-input class="{{ $errors->has('name') ? 'is-invalid' : '' }}" type="text" name="name"
+                    <x-jet-input class="{{ $errors->has('name') ? 'is-invalid' : '' }} mb-0" type="text" name="name"
                                  :value="old('name')" required autofocus autocomplete="name" />
                     <x-jet-input-error for="name"></x-jet-input-error>
                 </div>
-
-                <div class="mb-3">
+                <div class="form-group">
                     <x-jet-label value="{{ __('Email') }}" />
 
-                    <x-jet-input class="{{ $errors->has('email') ? 'is-invalid' : '' }}" type="email" name="email"
+                    <x-jet-input class="{{ $errors->has('email') ? 'is-invalid' : '' }} mb-0" type="email" name="email"
                                  :value="old('email')" required />
                     <x-jet-input-error for="email"></x-jet-input-error>
                 </div>
-
-                <div class="mb-3">
+                <div class="form-group">
                     <x-jet-label value="{{ __('Password') }}" />
 
-                    <x-jet-input class="{{ $errors->has('password') ? 'is-invalid' : '' }}" type="password"
+                    <x-jet-input class="{{ $errors->has('password') ? 'is-invalid' : '' }} mb-0" type="password"
                                  name="password" required autocomplete="new-password" />
                     <x-jet-input-error for="password"></x-jet-input-error>
                 </div>
-
-                <div class="mb-3">
+                <div class="form-group">
                     <x-jet-label value="{{ __('Confirm Password') }}" />
 
-                    <x-jet-input class="form-control" type="password" name="password_confirmation" required autocomplete="new-password" />
+                    <x-jet-input class="mb-0" type="password" name="password_confirmation" required autocomplete="new-password" />
                 </div>
-
-                @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
-                    <div class="mb-3">
-                        <div class="custom-control custom-checkbox">
-                            <x-jet-checkbox id="terms" name="terms" />
-                            <label class="custom-control-label" for="terms">
-                                {!! __('I agree to the :terms_of_service and :privacy_policy', [
-                                            'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'">'.__('Terms of Service').'</a>',
-                                            'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'">'.__('Privacy Policy').'</a>',
-                                    ]) !!}
-                            </label>
+                <div class="d-inline-block w-100">
+                    @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
+                        <div class="mb-3">
+                            <div class="custom-control custom-checkbox d-inline-block mt-2 pt-1">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                <label class="custom-control-label" for="terms">
+                                    {!! __('I agree to the :terms_of_service and :privacy_policy', [
+                                                'terms_of_service' => '<a target="_blank" href="'.route('terms.show').'">'.__('Terms of Service').'</a>',
+                                                'privacy_policy' => '<a target="_blank" href="'.route('policy.show').'">'.__('Privacy Policy').'</a>',
+                                        ]) !!}
+                                </label>
+                            </div>
                         </div>
-                    </div>
-                @endif
-
-                <div class="mb-0">
-                    <div class="d-flex justify-content-end align-items-baseline">
-                        <a class="text-muted me-3 text-decoration-none" href="{{ route('login') }}">
-                            {{ __('Already registered?') }}
-                        </a>
-
-                        <x-jet-button>
-                            {{ __('Register') }}
-                        </x-jet-button>
-                    </div>
+                    @endif
+                    <button type="submit" class="btn btn-primary float-right">{{ __('Register') }}</button>
                 </div>
             </form>
         </div>
